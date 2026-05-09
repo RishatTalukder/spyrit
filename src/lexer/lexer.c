@@ -43,12 +43,6 @@ static void skip_whitespaces(Lexer *lex)
         read_char(lex);
     }
 }
-/*
- * init_lexer: Initializes a Lexer with a source code buffer.
- * Sets up internal state and reads the first character.
- * @param lex: Pointer to Lexer struct to initialize
- * @param buffer: Pointer to source code string
- */
 
 void init_lexer(Lexer *lex, char *buffer)
 {
@@ -59,13 +53,6 @@ void init_lexer(Lexer *lex, char *buffer)
     read_char(lex);
 }
 
-/*
- * next_token: Extracts and returns the next token from the source.
- * Handles keywords (int, input, output), identifiers, symbols (=, :),
- * and invalid/unknown characters.
- * @param lex: Pointer to initialized Lexer
- * @return: Token struct containing the kind and literal of next token
- */
 Token next_token(Lexer *lex)
 {
     Token token;
