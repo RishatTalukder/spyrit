@@ -48,10 +48,11 @@ static void skip_whitespaces(Lexer *lex)
  * Sets up internal state and reads the first character.
  * @param lex: Pointer to Lexer struct to initialize
  * @param buffer: Pointer to source code string
- */void init_lexer(Lexer *lex, char *buffer)
+ */
+
+void init_lexer(Lexer *lex, char *buffer)
 {
     lex->buffer = buffer;
-    // strcpy(lex->buffer, buffer);
     lex->buffer_size = strlen(buffer);
     lex->position = 0;
     lex->read_position = 0;
