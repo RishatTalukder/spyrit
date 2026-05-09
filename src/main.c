@@ -1,7 +1,16 @@
+/*
+ * File: main.c - Main entry point
+ * Purpose: Demonstrates the lexer by tokenizing sample source code.
+ */
+
 #include <stdio.h>
 #include "./token/token.h"
 #include "./lexer/lexer.h"
 
+/*
+ * main: Entry point. Initializes lexer with sample code and prints all tokens.
+ * @return: 0 on successful completion
+ */
 int main() {
     char *source_code = "n: int = input\noutput n";
 

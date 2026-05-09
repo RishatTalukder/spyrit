@@ -1,9 +1,19 @@
+/*
+ * File: lexer.c - Lexical analyzer implementation
+ * Purpose: Implements tokenization of source code.
+ *          Scans input for keywords (int, input, output), identifiers, symbols, and whitespace.
+ */
+
 #include <string.h>
 #include <ctype.h>
 #include "lexer.h"
 
-// These are internal helper functions
-// 'static' means they are private to this file only
+/*
+ * read_char: Advances the lexer to the next character in the buffer.
+ * Updates lexer->character and lexer->position.
+ * Sets character to '\0' (EOF) if at end of buffer.
+ * This is an internal helper function.
+ */
 static void read_char(Lexer *lex)
 {
     if (lex->read_position >= lex->buffer_size)
@@ -18,6 +28,11 @@ static void read_char(Lexer *lex)
     lex->read_position += 1;
 }
 
+/*
+ * skip_whitespaces: Advances past any whitespace characters (space, tab, newline, carriage return).
+ * Moves the lexer to the next non-whitespace character.
+ * This is an internal helper function.
+ */
 static void skip_whitespaces(Lexer *lex)
 {
     while (lex->character == ' ' ||
@@ -28,16 +43,28 @@ static void skip_whitespaces(Lexer *lex)
         read_char(lex);
     }
 }
-
-void init_lexer(Lexer *lex, const char *buffer)
+/*
+ * init_lexer: Initializes a Lexer with a source code buffer.
+ * Sets up internal state and reads the first character.
+ * @param lex: Pointer to Lexer struct to initialize
+ * @param buffer: Pointer to source code string
+ */void init_lexer(Lexer *lex, char *buffer)
 {
     lex->buffer = buffer;
+    // strcpy(lex->buffer, buffer);
     lex->buffer_size = strlen(buffer);
     lex->position = 0;
     lex->read_position = 0;
     read_char(lex);
 }
 
+/*
+ * next_token: Extracts and returns the next token from the source.
+ * Handles keywords (int, input, output), identifiers, symbols (=, :),
+ * and invalid/unknown characters.
+ * @param lex: Pointer to initialized Lexer
+ * @return: Token struct containing the kind and literal of next token
+ */
 Token next_token(Lexer *lex)
 {
     Token token;
@@ -57,18 +84,21 @@ Token next_token(Lexer *lex)
         token = create_token(EOF_TOKEN, "");
         break;
     default:
+        /* Handle alphabetic characters (keywords and identifiers) */
         if (isalpha(lex->character))
         {
             char word_buffer[256];
             int i = 0;
 
-            while (isalpha(lex->character))
+            /* Accumulate consecutive alphabetic characters */
+            while (isalpha(lex->character) && i < 255)
             {
                 word_buffer[i++] = lex->character;
                 read_char(lex);
             }
             word_buffer[i] = '\0';
 
+            /* Check if accumulated word is a keyword */
             if (strcmp(word_buffer, "int") == 0)
                 return create_token(INT, word_buffer);
             else if (strcmp(word_buffer, "input") == 0)
@@ -80,6 +110,7 @@ Token next_token(Lexer *lex)
         }
         else
         {
+            /* Unknown or invalid character */
             char invalid_buffer[2] = {lex->character, '\0'};
             token = create_token(INVALID, invalid_buffer);
             read_char(lex);
