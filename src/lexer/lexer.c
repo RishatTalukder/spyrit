@@ -29,7 +29,7 @@ static void skip_whitespaces(Lexer *lex)
     }
 }
 
-void init_lexer(Lexer *lex, char *buffer)
+void init_lexer(Lexer *lex, const char *buffer)
 {
     lex->buffer = buffer;
     lex->buffer_size = strlen(buffer);

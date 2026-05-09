@@ -6,9 +6,9 @@ const char *show_token(TokenKind token)
     switch (token)
     {
     case IDENTIFIER:
-        return "indentifier";
+        return "identifier";
     case INT:
-        return "int";
+        return "integer";
     case INPUT:
         return "input";
     case OUTPUT:

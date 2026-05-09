@@ -19,3 +19,31 @@ while i < n:
 I think I'll be happy if I can run this code without any error in my own hand-made compiler.
 
 I'm using `c` as a base language. I could've chosen C++ but why not torture myself. Actually I'm writting C code after 4 years.
+
+## Project Structure
+
+spyrit/
+├── src/
+│   ├── main.c          # Entry point
+│   ├── token/
+│   │   ├── token.h     # Token types and struct definitions
+│   │   └── token.c     # Token helper functions
+│   └── lexer/
+│       ├── lexer.h     # Lexer struct definition
+│       └── lexer.c     # Lexer implementation
+└── Makefile
+
+## How to Build
+
+make
+
+## How to Run
+
+./spyrit
+
+## Stages
+
+- [x] Lexer
+- [ ] Parser
+- [ ] AST
+- [ ] Code Generator
